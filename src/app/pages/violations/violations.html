@@ -1,0 +1,96 @@
+<section class="violations-section">
+  <div class="row mb-3">
+  <div class="col-md-4">
+    <select class="form-select" [(ngModel)]="selectedDistrict" (change)="applyFilters()">
+      <option value="All">All Districts</option>
+      <option *ngFor="let d of districts" [value]="d">{{ d }}</option>
+    </select>
+  </div>
+
+  <div class="col-md-4">
+    <select class="form-select" [(ngModel)]="selectedStatus" (change)="applyFilters()">
+      <option value="All">All Status</option>
+      <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+    </select>
+  </div>
+</div>
+
+  <div class="container-fluid">
+
+    <div class="row">
+
+      <!-- LEFT SIDE -->
+      <div class="col-md-8">
+
+        <!-- 🗺️ MAP -->
+        <div class="map-box mb-4">
+          <div #mapViewNode class="map"></div>
+        </div>
+
+        <!-- 📋 TABLE -->
+        <div class="table-responsive">
+
+          <table class="table table-success table-striped">
+
+            <thead>
+              <tr>
+                <th>Violation</th>
+                <th>Location</th>
+                <th>Picture</th>
+                <th>Reporting #</th>
+                <th>Assigned Officer</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let v of filteredViolations">
+                <td>{{ v.type }}</td>
+                <td>{{ v.location }}</td>
+
+                <td>
+                  <img [src]="v.image" class="img-thumbnail" width="60">
+                </td>
+
+                <td>{{ v.whatsapp }}</td>
+                <td>{{ v.officer }}</td>
+
+                <td>
+                  <span [ngClass]="{
+                      'badge bg-warning text-dark': v.status === 'Pending',
+                      'badge bg-success': v.status === 'Resolved',
+                      'badge bg-danger': v.status === 'Fined',
+                      'badge bg-info': v.status === 'Suspended'
+                    }">
+                      {{ v.status }}
+                    </span>
+                </td>
+              </tr>
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT SIDE -->
+      <div class="col-md-4">
+
+        <!-- PIE -->
+        <div class="chart-box mb-4">
+          <canvas #pieChart></canvas>
+        </div>
+
+        <!-- BAR -->
+        <div class="chart-box">
+          <canvas #barChart></canvas>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>

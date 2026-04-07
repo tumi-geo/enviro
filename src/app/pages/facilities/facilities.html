@@ -1,0 +1,79 @@
+<section class="facilities-section">
+
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="text-center mb-4">
+      <h2 class="text-white">Regulated Facilities</h2>
+      <p class="text-white">
+        Monitor and manage facilities under environmental regulation. Track compliance status and inspections.
+      </p>
+    </div>
+
+    <!-- 🗺️ MAP (NOW ON TOP) -->
+    <div class="map-container mb-5">
+      <h4 class="text-white mb-3 text-start">Facilities Coverage Map</h4>
+      <div #mapViewNode class="map-box"></div>
+    </div>
+
+    <!-- 📋 TABLE -->
+    <div class="table-responsive">
+
+      <table class="table table-success table-striped table-hover align-middle">
+
+        <thead>
+          <tr>
+            <th>Facility Name</th>
+            <th>Owner (Company)</th>
+            <th>Location</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Last Inspection</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let f of facilities">
+
+            <td>{{ f.name }}</td>
+            <td>{{ f.owner }}</td>
+            <td>{{ f.location }}</td>
+            <td>{{ f.contact }}</td>
+            <td>{{ f.email }}</td>
+
+            <td>
+              <span [ngClass]="{
+                'badge bg-success': f.status === 'Compliant',
+                'badge bg-danger': f.status === 'Non-Compliant',
+                'badge bg-warning text-dark': f.status === 'Pending'
+              }">
+                {{ f.status }}
+              </span>
+            </td>
+
+            <td>{{ f.lastInspection }}</td>
+
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2"
+                (click)="viewFacility(f)">
+                View
+              </button>
+
+              <button class="btn btn-sm btn-success"
+                (click)="assignInspector(f)">
+                Assign
+              </button>
+            </td>
+
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</section>

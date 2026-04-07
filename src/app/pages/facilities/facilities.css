@@ -1,0 +1,42 @@
+.facilities-section {
+  padding: 100px 0 60px;
+  position: relative;
+  z-index: 8;
+  text-align: center;
+
+  background-image: url('/src/assets/img/envir.png');
+  background-size: cover;
+  background-position: center;
+}
+
+.facilities-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 1;
+}
+
+.facilities-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+.table {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.map-container {
+  position: relative;
+  z-index: 2;
+}
+
+.map-box {
+  height: 500px;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.4);
+}

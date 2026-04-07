@@ -1,0 +1,88 @@
+<section class="inspectors-section">
+
+  <h2 class="text-white mb-3">Authorized Inspectors</h2>
+
+  <p class="text-white mb-4">
+    Filter and manage certified inspectors. Assign inspections and view coverage areas.
+  </p>
+
+  <div class="container">
+
+    <div class="row mb-4">
+
+      <div class="col-md-4">
+        <select class="form-control" [(ngModel)]="selectedLocation" (change)="filterInspectors()">
+          <option value="">Filter by Location</option>
+          <option>Gaborone</option>
+          <option>Francistown</option>
+          <option>Maun</option>
+        </select>
+      </div>
+
+      <div class="col-md-4">
+      <select class="form-control" [(ngModel)]="selectedDistrict" (change)="filterInspectors()">
+        <option value="">Filter by District</option>
+        <option *ngFor="let d of districts">{{ d }}</option>
+      </select>
+      </div>
+
+      <div class="col-md-4">
+        <select class="form-control" [(ngModel)]="selectedYears" (change)="filterInspectors()">
+          <option value="">Years Experience</option>
+          <option value="5">5+ years</option>
+          <option value="8">8+ years</option>
+          <option value="10">10+ years</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- 📋 TABLE -->
+    <div class="table-responsive mb-4">
+
+      <table class="table table-success table-striped table-hover">
+
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Reg No</th>
+            <th>District</th>
+            <th>Years</th>
+            <th>Office</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let i of filteredInspectors">
+            <td>{{ i.name }}</td>
+            <td>{{ i.surname }}</td>
+            <td>{{ i.regNo }}</td>
+            <td>{{ i.district}}</td>
+            <td>{{ i.years }}</td>
+            <td>{{ i.office }}</td>
+            <td>{{ i.email }}</td>
+            <td>{{ i.phone }}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-1" (click)="viewProfile(i)">
+                View
+              </button>
+              <button class="btn btn-sm btn-success" (click)="assignInspection(i)">
+                Assign
+              </button>
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <div #mapViewNode class="map-box"></div>
+
+  </div>
+
+</section>

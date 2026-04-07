@@ -1,0 +1,72 @@
+<div class="login-container d-flex justify-content-center">
+  <div class="login-card p-5 rounded-4 shadow-lg">
+
+    <h2 class="mb-4 text-center">Permit Application</h2>
+
+    <form (ngSubmit)="submitForm()">
+
+      <div class="mb-3">
+        <input type="text" [(ngModel)]="formData.applicantName" name="applicantName"
+               class="form-control form-control-lg"
+               placeholder="Applicant Name" required>
+      </div>
+
+      <div class="mb-3">
+        <input type="email" [(ngModel)]="formData.email" name="email"
+               class="form-control form-control-lg"
+               placeholder="Email Address" required>
+      </div>
+
+      <div class="mb-3">
+        <input type="tel" [(ngModel)]="formData.phone" name="phone"
+               class="form-control form-control-lg"
+               placeholder="Cellphone Number" required>
+      </div>
+
+      <div class="mb-3">
+        <input type="text" [(ngModel)]="formData.projectName" name="projectName"
+               class="form-control form-control-lg"
+               placeholder="Project Name" required>
+      </div>
+
+      <!-- Activity Type -->
+      <div class="mb-3">
+        <select [(ngModel)]="formData.activityType" name="activityType"
+                class="form-control form-control-lg" required>
+          <option value="" disabled selected>Select Activity Type</option>
+          <option>Construction</option>
+          <option>Mining</option>
+          <option>Health</option>
+          <option>Food Processing</option>
+          <option>Manufacturing</option>
+          <option>Chemical Processing</option>
+        </select>
+      </div>
+
+      <!-- Map Picker -->
+      <div class="mb-3">
+        <label class="text-white mb-2">Select Project Location</label>
+        <div #mapViewNode class="map-box"></div>
+      </div>
+
+      <!-- Coordinates -->
+      <div class="mb-3">
+        <input type="text" [(ngModel)]="formData.locationText" name="locationText"
+               class="form-control form-control-lg"
+               placeholder="Selected Location" readonly>
+      </div>
+
+      <div class="mb-4">
+        <textarea [(ngModel)]="formData.description" name="description"
+                  class="form-control form-control-lg"
+                  rows="3"
+                  placeholder="Project Description"></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-success btn-lg w-100">
+        Submit Application
+      </button>
+
+    </form>
+  </div>
+</div>

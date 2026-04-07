@@ -1,0 +1,43 @@
+.reports-section {
+  padding: 100px 0 60px;
+  position: relative;
+  z-index: 8;
+  text-align: center;
+
+  background-image: url('/src/assets/img/envir.png');
+  background-size: cover;
+  background-position: center;
+}
+
+/* Dark overlay for readability */
+.reports-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.reports-section .container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Card styling */
+.card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-header {
+  font-weight: 600;
+}
+
+.card-footer button {
+  width: 48%;
+}

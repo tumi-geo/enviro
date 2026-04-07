@@ -1,0 +1,75 @@
+body {
+  padding-top: 100px; /* Prevent page content from being hidden under navbar */
+}
+
+/* Liquid Navigation Bar */
+.liquid-nav {
+  margin: 20px;
+  border-radius: 50px;
+  padding: 10px 25px;
+  background: rgba(0, 123, 255, 0.15);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+  transition: all .3s ease;
+}
+
+.liquid-nav:hover {
+  background: rgba(0, 123, 255, 0.25);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.25);
+}
+
+/* Nav links */
+.nav-link {
+  color: #003366 !important;
+  font-weight: 500;
+  margin: 0 5px;
+  border-radius: 20px;
+  transition: 0.2s;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, .4);
+  color: #000 !important;
+}
+
+.nav-link.active {
+  background: rgba(0, 86, 179, 0.2);
+  font-weight: bold;
+  color: #000 !important;
+}
+
+/* Reduce space between buttons */
+.d-flex.gap-2 {
+  gap: 8px; /* tighter spacing */
+}
+
+/* Shared button style */
+.btn-login,
+.btn-register {
+  background: #376da6;
+  color: white;
+  padding: 8px 18px;
+  border-radius: 30px;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(0, 105, 217, 0.3);
+  transition: all 0.2s ease;
+}
+
+/* Hover effect */
+.btn-login:hover,
+.btn-register:hover {
+  background: #2c5c8c;
+  transform: translateY(-2px);
+}
+
+/* Active (clicked/current route) */
+.active-btn {
+  background: #0d6efd !important;
+  box-shadow: 0 6px 20px rgba(13, 110, 253, 0.5);
+}
+/* Container for page content */
+.app-body {
+  padding: 20px;
+}

@@ -1,0 +1,45 @@
+.violations-section {
+  padding: 80px 20px;
+  background-image: url('/src/assets/img/envir.png');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.violations-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+}
+
+.container-fluid {
+  position: relative;
+  z-index: 2;
+}
+
+/* MAP */
+.map-box {
+  height: 450px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.map {
+  height: 100%;
+  width: 100%;
+}
+
+/* CHARTS */
+.chart-box {
+  background: white;
+  padding: 15px;
+  border-radius: 12px;
+  height: 250px;
+  position: relative;
+}
+
+/* TABLE */
+.table {
+  background: rgba(255,255,255,0.95);
+}
