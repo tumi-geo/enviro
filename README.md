@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Portal
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.2.
@@ -57,3 +58,6 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+=======
+# enviro
+>>>>>>> bda53cb6ab2d485ab8f215f84c472d1db7866c24
