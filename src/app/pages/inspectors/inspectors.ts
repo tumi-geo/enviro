@@ -19,7 +19,9 @@ export class InspectorsComponent  implements OnInit {
  inspectors = [
   { name: 'Kabelo', surname: 'Molefe', regNo: 'ENV-001', district: 'Gaborone', years: 8, office: 'Gaborone', email: 'kabelo@eco.bw', phone: '+26771234567' },
   { name: 'Naledi', surname: 'Dube', regNo: 'ENV-002', district: 'Francistown', years: 5, office: 'Francistown', email: 'naledi@green.bw', phone: '+26772345678' },
-  { name: 'Thabo', surname: 'Kgosi', regNo: 'ENV-003', district: 'Maun', years: 10, office: 'Maun', email: 'thabo@enviro.bw', phone: '+26773456789' }
+  { name: 'Thabo', surname: 'Kgosi', regNo: 'ENV-003', district: 'Maun', years: 10, office: 'Maun', email: 'thabo@enviro.bw', phone: '+26773456789' },
+  { name: 'Goaba', surname: 'Moremo', regNo: 'ENV-055', district: 'Kanye', years: 3, office: 'Kanye', email: 'goaba@gov.bw', phone: '+26773456789' },
+  { name: 'Katlego', surname: 'Fahilna', regNo: 'ENV-013', district: 'Lobatse', years: 3, office: 'Lobatse', email: 'katlef@gov.bw', phone: '+26773456789' }
 ];
 
   filteredInspectors = [...this.inspectors];

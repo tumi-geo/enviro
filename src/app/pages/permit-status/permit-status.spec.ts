@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PermitsComponent } from './permits';
+import { PermitStatusComponent } from './permit-status';
 
-describe('PermitsComponent', () => {
-  let component: PermitsComponent;
-  let fixture: ComponentFixture<PermitsComponent>;
+describe('PermitStatusComponent', () => {
+  let component: PermitStatusComponent;
+  let fixture: ComponentFixture<PermitStatusComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PermitsComponent]
+      imports: [PermitStatusComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PermitsComponent);
+    fixture = TestBed.createComponent(PermitStatusComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

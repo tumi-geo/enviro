@@ -1,1 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+/* Reset margins and padding for full bleed background */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Ensure main app container takes full height */
+app-root {
+  display: block;
+  min-height: 100vh;
+}
+
+/* Make sure all page components take full width */
+router-outlet + * {
+  display: block;
+  width: 100%;
+}

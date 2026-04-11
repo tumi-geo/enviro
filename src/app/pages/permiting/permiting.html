@@ -1,0 +1,23 @@
+<section class="features-1">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div *ngFor="let feature of features"
+      class="col-12 col-md-6 col-lg-4" [attr.data-aos]="'fade-up'"
+      [attr.data-aos-delay]="feature.delay">
+        <div class="box-feature" data-aos="fade-up" data-aos-delay="100">
+          <span [class]="feature.icon"></span>
+
+          <h3 class="mb-3">{{ feature.title }}</h3>
+
+          <p>{{ feature.description }}</p>
+
+          <p>
+            <a [routerLink]="feature.route" class="btn btn-primary py-2 px-3">Continue</a>
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+

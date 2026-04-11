@@ -1,0 +1,132 @@
+<section class="permit-status-section">
+
+  <div class="container-fluid">
+
+    <!-- Header -->
+    <div class="header-section">
+      <h2 class="text-white mb-3">Permit Status Tracking</h2>
+      <p class="text-white mb-4 description">
+        Track your environmental permit applications, monitor approval progress,
+        and stay updated on compliance requirements.
+      </p>
+    </div>
+
+    <!-- Split Layout: Map Left, Table Right -->
+    <div class="split-layout">
+
+
+      <!-- RIGHT SIDE - TABLE -->
+      <div class="table-side">
+        <div class="table-card">
+
+          <!-- Search and Filter Bar -->
+          <div class="filter-bar">
+            <div class="search-box">
+              <i class="fas fa-search"></i>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search by applicant, project, location, or reference..."
+                [(ngModel)]="searchText"
+                (input)="filterPermits()"
+              />
+            </div>
+
+            <div class="filter-group">
+              <select
+                class="form-control"
+                [(ngModel)]="selectedStatus"
+                (change)="filterPermits()"
+              >
+                <option value="">All Status ({{ allPermits.length }})</option>
+                <option value="Approved">✓ Approved ({{ getStatusCount('Approved') }})</option>
+                <option value="Pending">⏳ Pending ({{ getStatusCount('Pending') }})</option>
+                <option value="Rejected">✗ Rejected ({{ getStatusCount('Rejected') }})</option>
+              </select>
+
+              <button class="btn-clear" (click)="clearFilters()" *ngIf="searchText || selectedStatus">
+                <i class="fas fa-times"></i> Clear
+              </button>
+            </div>
+          </div>
+
+          <!-- Loading State -->
+          <div *ngIf="loading" class="loading-state">
+            <div class="spinner"></div>
+            <p>Loading permits...</p>
+          </div>
+
+          <!-- Table -->
+          <div class="table-responsive" *ngIf="!loading">
+            <table class="permit-table">
+              <thead>
+                <tr>
+                  <th>Reference</th>
+                  <th>Applicant</th>
+                  <th>Project Name</th>
+                  <th>Category</th>
+                  <th>Location</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let permit of filteredPermits"
+                    class="permit-row"
+                    [class.selected]="selectedPermit === permit"
+                    (click)="zoomToPermit(permit)">
+                  <td><span class="ref-code">{{ permit.permitRef }}</span></td>
+                  <td>{{ permit.applicant }}</td>
+                  <td>{{ permit.projectName }}</td>
+                  <td>{{ permit.category }}</td>
+                  <td>{{ permit.location }}</td>
+                  <td>
+                    <span class="status-badge" [class]="permit.status.toLowerCase()">
+                      {{ permit.status }}
+                    </span>
+                  </td>
+                  <td>
+                    <button class="btn-view" (click)="$event.stopPropagation(); zoomToPermit(permit)">
+                      <i class="fas fa-map-marker-alt"></i> Locate
+                    </button>
+                  </td>
+                </tr>
+
+                <tr *ngIf="filteredPermits.length === 0">
+                  <td colspan="7" class="empty-state">
+                    <i class="fas fa-search"></i>
+                    <p>No permits found matching your criteria</p>
+                    <button class="btn-clear" (click)="clearFilters()">Clear Filters</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Results Summary -->
+          <div class="table-footer" *ngIf="!loading && filteredPermits.length > 0">
+            <span>Showing {{ filteredPermits.length }} of {{ allPermits.length }} permits</span>
+          </div>
+        </div>
+      </div>
+
+       <!-- LEFT SIDE - MAP -->
+      <div class="map-side">
+        <div class="map-card">
+          <div class="map-header">
+            <h5><i class="fas fa-map-marker-alt"></i> Permit Locations</h5>
+            <span class="map-stats">{{ filteredPermits.length }} permits shown</span>
+          </div>
+          <div #mapViewNode class="map-box"></div>
+          <div class="map-legend">
+            <span><i class="fas fa-circle" style="color: #28a745;"></i> Approved</span>
+            <span><i class="fas fa-circle" style="color: #ffc107;"></i> Pending</span>
+            <span><i class="fas fa-circle" style="color: #dc3545;"></i> Rejected</span>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</section>

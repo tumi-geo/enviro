@@ -1,14 +1,11 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
-import { FooterComponent } from "./pages/shared/footer/footer";
+import { ApplicationConfig } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { routes } from './app.routes';
 
-@Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, RouterLink, FooterComponent],
-  templateUrl: './app.html',
-  styleUrls: ['./app.css']
-})
-export class AppComponent {
-  title = signal('portal');
-}
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient()  // This is needed for PermitService
+  ]
+};

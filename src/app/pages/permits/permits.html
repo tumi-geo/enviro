@@ -3,70 +3,121 @@
 
     <h2 class="mb-4 text-center">Permit Application</h2>
 
-    <form (ngSubmit)="submitForm()">
+    <form (ngSubmit)="submitForm()" #permitForm="ngForm">
 
-      <div class="mb-3">
-        <input type="text" [(ngModel)]="formData.applicantName" name="applicantName"
-               class="form-control form-control-lg"
-               placeholder="Applicant Name" required>
-      </div>
+      <!-- Applicant Info (matching service fields) -->
+      <input class="form-control mb-3"
+        [(ngModel)]="formData.applicant"
+        name="applicant"
+        placeholder="Applicant Name"
+        required />
 
-      <div class="mb-3">
-        <input type="email" [(ngModel)]="formData.email" name="email"
-               class="form-control form-control-lg"
-               placeholder="Email Address" required>
-      </div>
+      <input class="form-control mb-3"
+        [(ngModel)]="formData.contact"
+        name="contact"
+        placeholder="Phone Number"
+        required />
 
-      <div class="mb-3">
-        <input type="tel" [(ngModel)]="formData.phone" name="phone"
-               class="form-control form-control-lg"
-               placeholder="Cellphone Number" required>
-      </div>
+      <input class="form-control mb-3"
+        [(ngModel)]="formData.email"
+        name="email"
+        type="email"
+        placeholder="Email Address"
+        required />
 
-      <div class="mb-3">
-        <input type="text" [(ngModel)]="formData.projectName" name="projectName"
-               class="form-control form-control-lg"
-               placeholder="Project Name" required>
-      </div>
+      <input class="form-control mb-3"
+        [(ngModel)]="formData.projectName"
+        name="projectName"
+        placeholder="Project Name"
+        required />
 
-      <!-- Activity Type -->
-      <div class="mb-3">
-        <select [(ngModel)]="formData.activityType" name="activityType"
-                class="form-control form-control-lg" required>
-          <option value="" disabled selected>Select Activity Type</option>
-          <option>Construction</option>
-          <option>Mining</option>
-          <option>Health</option>
-          <option>Food Processing</option>
-          <option>Manufacturing</option>
-          <option>Chemical Processing</option>
-        </select>
-      </div>
+      <!-- Activity Type (maps to category in service) -->
+      <select class="form-control mb-3"
+        [(ngModel)]="formData.category"
+        name="category"
+        required>
+        <option value="">Select Activity Type</option>
+        <option value="Construction">Construction</option>
+        <option value="Mining">Mining</option>
+        <option value="Manufacturing">Manufacturing</option>
+        <option value="Food Processing">Food Processing</option>
+        <option value="Water Treatment">Water Treatment</option>
+        <option value="Waste Management">Waste Management</option>
+      </select>
 
-      <!-- Map Picker -->
-      <div class="mb-3">
-        <label class="text-white mb-2">Select Project Location</label>
-        <div #mapViewNode class="map-box"></div>
-      </div>
+      <!-- MAP -->
+      <label class="text-white mb-2">Select Location *</label>
+      <div #mapViewNode class="map-box mb-3"></div>
+      <small class="text-white-50 d-block mb-2">Click "Draw Point" or "Draw Polygon" to mark location</small>
 
-      <!-- Coordinates -->
-      <div class="mb-3">
-        <input type="text" [(ngModel)]="formData.locationText" name="locationText"
-               class="form-control form-control-lg"
-               placeholder="Selected Location" readonly>
-      </div>
+      <input class="form-control mb-3"
+        [(ngModel)]="formData.location"
+        name="location"
+        placeholder="Selected Location"
+        readonly />
 
-      <div class="mb-4">
-        <textarea [(ngModel)]="formData.description" name="description"
-                  class="form-control form-control-lg"
-                  rows="3"
-                  placeholder="Project Description"></textarea>
-      </div>
+      <!-- Description -->
+      <textarea class="form-control mb-3"
+        [(ngModel)]="formData.description"
+        name="description"
+        placeholder="Project Description (optional)"
+        rows="3">
+      </textarea>
 
-      <button type="submit" class="btn btn-success btn-lg w-100">
-        Submit Application
+      <!-- File Upload -->
+      <label class="text-white mb-2">Supporting Documents (Optional)</label>
+      <input type="file"
+        multiple
+        class="form-control mb-3"
+        (change)="onFileSelected($event)"
+        accept=".pdf,.doc,.docx,.jpg,.png" />
+
+      <!-- Submit Button -->
+      <button class="btn btn-success w-100" type="submit" [disabled]="isSubmitting">
+        <span *ngIf="isSubmitting">Submitting...</span>
+        <span *ngIf="!isSubmitting">Submit Application</span>
       </button>
 
     </form>
+
+    <!-- GEOMETRY CONTROLS -->
+    <div class="mt-3 d-grid gap-2">
+      <button class="btn btn-outline-primary"
+        type="button"
+        (click)="setGeometryType('point')"
+        [disabled]="!isMapInitialized">
+        📍 Draw Point
+      </button>
+
+      <button class="btn btn-outline-secondary"
+        type="button"
+        (click)="setGeometryType('polygon')"
+        [disabled]="!isMapInitialized">
+        🟦 Draw Polygon
+      </button>
+
+      <button class="btn btn-outline-light mt-2"
+        type="button"
+        (click)="generatePreviewPDF()">
+        Preview PDF
+      </button>
+    </div>
+
+    <!-- PDF PREVIEW (Hidden - used for PDF generation) -->
+    <div id="pdfPreview" class="bg-white p-3 mt-4 rounded" style="display: none;">
+      <div id="previewContent">
+        <h5 class="mb-3 text-center">Permit Application Preview</h5>
+        <p><strong>Applicant:</strong> {{ formData.applicant }}</p>
+        <p><strong>Contact:</strong> {{ formData.contact }}</p>
+        <p><strong>Email:</strong> {{ formData.email }}</p>
+        <p><strong>Project Name:</strong> {{ formData.projectName }}</p>
+        <p><strong>Activity Type:</strong> {{ formData.category }}</p>
+        <p><strong>Location:</strong> {{ formData.location }}</p>
+        <p><strong>Status:</strong> Pending Review</p>
+        <hr>
+        <p class="text-muted small">Generated on: {{ getCurrentDate() }}</p>
+      </div>
+    </div>
+
   </div>
 </div>

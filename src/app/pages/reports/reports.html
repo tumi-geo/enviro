@@ -1,40 +1,30 @@
 <section class="reports-section">
 
-  <h2 class="text-white mb-5">Environmental Compliance Reports</h2>
-
   <div class="container">
-    <div class="row">
+    <div class="justify-content-center">
+    <h2 class="text-white mb-5">Environmental Compliance Reports</h2>
 
-      <div class="col-md-4 mb-4" *ngFor="let report of reports">
-
-        <div class="card border-success h-100">
-
-          <div class="card-header bg-transparent border-success">
+    <div class="row justify-content-center">
+      <div class="col-md-4 mb-4" *ngFor="let report of reports; let i = index">
+        <div class="card h-100" [attr.data-aos]="'fade-up'" [attr.data-aos-delay]="i * 100">
+          <div class="card-header">
             {{ report.village }}
           </div>
-
-          <div class="card-body text-success">
+          <div class="card-body">
             <h5 class="card-title">{{ report.title }}</h5>
             <p class="card-text">{{ report.description }}</p>
           </div>
-
-          <div class="card-footer bg-transparent border-success d-flex justify-content-between">
-
+          <div class="card-footer">
             <button class="btn btn-outline-success btn-sm" [routerLink]="['/reports', report.village, report.title]">
               Read More
             </button>
-
-            <button class="btn btn-success btn-sm"
-              (click)="downloadPDF(report)">
+            <button class="btn btn-success btn-sm" (click)="downloadPDF(report)">
               Download
             </button>
-
           </div>
-
         </div>
-
       </div>
-
+    </div>
     </div>
   </div>
 

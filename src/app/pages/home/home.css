@@ -1,30 +1,181 @@
-.features-1 {
-  padding: 100px 0 60px;
-  position: relative;
-  z-index: 8;
-  text-align: center;
-  background-image: url('/src/assets/img/envir.png');
-  background-color: rgba(0, 32, 74, 0.05);
+/* Make html and body take full height */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-.box-feature {
-  background: #fff;
-  border-radius: 4px;
-  padding: 30px;
-  margin-bottom: 30px; }
-  .box-feature h3, .box-feature .h3 {
-    font-size: 16px;
-    margin: 0;
-    padding: 0; }
-  .box-feature [class^="flaticon-"] {
-    color: #00204a;
-    font-size: 60px;
-    margin: 0 0 10px 0;
-    display: block;
-    padding: 0;
-    line-height: 0; }
+/* Ensure home component takes full height */
+:host {
+  display: block;
+  min-height: 100vh;
+}
 
-    .sub-cards {
+.features-1 {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 0 0; /* Remove bottom padding */
+  position: relative;
+  text-align: center;
+
+  /* Background styling - covers entire section */
+  background-image:
+    linear-gradient(rgba(0, 32, 74, 0.6), rgba(0, 32, 74, 0.6)),
+    url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1470&q=80');
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Creates parallax effect */
+  background-color: #00204a;
+
+  /* Remove any default margins */
+  margin: 0;
+
+  z-index: 1;
+}
+
+/* Dark overlay for better text contrast */
+.features-1::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 32, 74, 0.3);
+  z-index: -1;
+}
+
+.container {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  width: 100%;
+}
+
+/* Card styling */
+.box-feature {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 25px 20px;
+  margin-bottom: 25px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.box-feature:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 1);
+}
+
+/* For browsers that support backdrop-filter */
+@supports (backdrop-filter: blur(10px)) {
+  .box-feature {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(10px);
+  }
+
+  .box-feature:hover {
+    background: rgba(255, 255, 255, 0.96);
+  }
+}
+
+/* Icon container for perfect centering */
+.box-feature [class*="fa-"] {
+  font-size: 48px;
+  color: #00204a;
+  margin: 0 auto 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: rgba(0, 32, 74, 0.08);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.box-feature:hover [class*="fa-"] {
+  transform: scale(1.05);
+  color: #004080;
+  background: rgba(0, 32, 74, 0.12);
+}
+
+/* Box feature legacy icon support */
+.box-feature [class^="flaticon-"] {
+  font-size: 48px;
+  color: #00204a;
+  margin: 0 auto 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: rgba(0, 32, 74, 0.08);
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.box-feature:hover [class^="flaticon-"] {
+  transform: scale(1.05);
+  background: rgba(0, 32, 74, 0.12);
+}
+
+.box-feature h3, .box-feature .h3 {
+  font-size: 18px;
+  margin: 10px 0 8px;
+  padding: 0;
+  color: #00204a;
+  font-weight: 700;
+  text-align: center;
+}
+
+.box-feature p {
+  color: #555;
+  line-height: 1.5;
+  margin-bottom: 18px;
+  font-size: 13px;
+  flex-grow: 1;
+  text-align: center;
+}
+
+/* Button styling */
+.box-feature .btn {
+  background: linear-gradient(135deg, #00204a, #004080);
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 25px;
+  transition: all 0.3s;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 11px;
+  display: inline-block;
+  text-decoration: none;
+  margin-top: auto;
+  cursor: pointer;
+}
+
+.box-feature .btn:hover {
+  background: linear-gradient(135deg, #004080, #0060c0);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 32, 74, 0.3);
+}
+
+.sub-cards {
   margin-top: 15px;
   animation: fadeIn 0.3s ease-in-out;
 }
@@ -33,11 +184,27 @@
   border-radius: 10px;
   font-weight: 500;
   transition: 0.2s;
+  cursor: pointer;
+  padding: 10px;
 }
 
 .sub-card:hover {
   background-color: #0d6efd;
   color: white;
+}
+
+/* Row spacing */
+.row {
+  margin-right: -15px;
+  margin-left: -15px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.col-12, .col-md-6, .col-lg-4 {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-bottom: 25px;
 }
 
 /* Smooth animation */
@@ -51,3 +218,168 @@
     transform: translateY(0);
   }
 }
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .box-feature {
+    padding: 22px 18px;
+  }
+
+  .box-feature h3 {
+    font-size: 17px;
+  }
+
+  .box-feature [class*="fa-"] {
+    font-size: 44px;
+    width: 75px;
+    height: 75px;
+  }
+}
+
+@media (max-width: 992px) {
+  .features-1 {
+    padding: 70px 0 0; /* Remove bottom padding */
+  }
+
+  .box-feature {
+    padding: 20px 15px;
+  }
+
+  .box-feature h3 {
+    font-size: 16px;
+  }
+
+  .box-feature p {
+    font-size: 12px;
+  }
+
+  .box-feature [class*="fa-"] {
+    font-size: 40px;
+    width: 70px;
+    height: 70px;
+  }
+}
+
+@media (max-width: 768px) {
+  .features-1 {
+    padding: 50px 0 0; /* Remove bottom padding */
+    background-attachment: scroll; /* Better performance on mobile */
+  }
+
+  .container {
+    padding: 0 15px;
+  }
+
+  .box-feature {
+    padding: 18px 15px;
+    margin-bottom: 20px;
+  }
+
+  .box-feature h3 {
+    font-size: 15px;
+    margin: 8px 0 6px;
+  }
+
+  .box-feature p {
+    font-size: 12px;
+    margin-bottom: 15px;
+  }
+
+  .box-feature [class*="fa-"] {
+    font-size: 36px;
+    width: 65px;
+    height: 65px;
+    margin-bottom: 12px;
+  }
+
+  .box-feature .btn {
+    padding: 7px 18px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .features-1 {
+    padding: 40px 0 0; /* Remove bottom padding */
+  }
+
+  .box-feature {
+    padding: 15px 12px;
+  }
+
+  .box-feature h3 {
+    font-size: 14px;
+  }
+
+  .box-feature p {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .box-feature [class*="fa-"] {
+    font-size: 32px;
+    width: 55px;
+    height: 55px;
+    margin-bottom: 10px;
+  }
+
+  .box-feature .btn {
+    padding: 6px 15px;
+    font-size: 10px;
+  }
+}
+
+/* Animation delay classes for staggered animations */
+[data-aos] {
+  opacity: 0;
+  transition-property: opacity, transform;
+}
+
+[data-aos].aos-animate {
+  opacity: 1;
+}
+
+[data-aos="fade-up"] {
+  transform: translateY(30px);
+}
+
+[data-aos="fade-up"].aos-animate {
+  transform: translateY(0);
+}
+
+/* Loading state */
+.features-1 {
+  animation: fadeIn 0.5s ease-in;
+}
+.features-1 {
+  animation: fadeIn 0.5s ease-in;
+}
+
+/* for even smaller cards
+.box-feature {
+  padding: 20px 15px;
+  margin-bottom: 20px;
+}
+
+.box-feature [class*="fa-"] {
+  font-size: 40px;
+  width: 65px;
+  height: 65px;
+  margin-bottom: 12px;
+}
+
+.box-feature h3 {
+  font-size: 16px;
+  margin: 8px 0 6px;
+}
+
+.box-feature p {
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+.box-feature .btn {
+  padding: 6px 16px;
+  font-size: 10px;
+}
+ */
