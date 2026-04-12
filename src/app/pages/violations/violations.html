@@ -1,96 +1,233 @@
 <section class="violations-section">
-  <div class="row mb-3">
-  <div class="col-md-4">
-    <select class="form-select" [(ngModel)]="selectedDistrict" (change)="applyFilters()">
-      <option value="All">All Districts</option>
-      <option *ngFor="let d of districts" [value]="d">{{ d }}</option>
-    </select>
-  </div>
-
-  <div class="col-md-4">
-    <select class="form-select" [(ngModel)]="selectedStatus" (change)="applyFilters()">
-      <option value="All">All Status</option>
-      <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
-    </select>
-  </div>
-</div>
-
   <div class="container-fluid">
+
+    <!-- Header -->
+    <div class="header-section">
+      <h2 class="text-white mb-3">Environmental Violations Dashboard</h2>
+      <p class="text-white mb-4 description">
+        Monitor and track environmental violations across Botswana. Click on any violation marker or table row to view detailed reports and field notes.
+      </p>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" class="form-control"
+               placeholder="Search violations, locations, or officers..."
+               [(ngModel)]="searchText"
+               (input)="applyFilters()" />
+      </div>
+
+      <div class="filter-group">
+        <select class="form-select"
+                [(ngModel)]="selectedDistrict"
+                (change)="applyFilters()">
+          <option value="All">All Districts ({{ violations.length }})</option>
+          <option *ngFor="let d of districts" [value]="d">{{ d }}</option>
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <select class="form-select"
+                [(ngModel)]="selectedStatus"
+                (change)="applyFilters()">
+          <option value="All">All Status</option>
+          <option *ngFor="let s of statuses" [value]="s">{{ s }}</option>
+        </select>
+      </div>
+
+      <button class="btn-clear"
+              *ngIf="searchText || selectedDistrict !== 'All' || selectedStatus !== 'All'"
+              (click)="clearFilters()">
+        <i class="fas fa-times"></i> Clear Filters
+      </button>
+    </div>
 
     <div class="row">
 
       <!-- LEFT SIDE -->
-      <div class="col-md-8">
+      <div class="col-md-7">
 
-        <!-- 🗺️ MAP -->
-        <div class="map-box mb-4">
-          <div #mapViewNode class="map"></div>
+        <!-- MAP -->
+        <div class="map-card">
+          <div class="map-header">
+            <h5><i class="fas fa-map-marker-alt"></i> Violation Locations</h5>
+            <span class="map-stats">{{ filteredViolations.length }} violations shown</span>
+          </div>
+
+          <div class="map-box">
+            <div #mapViewNode class="map"></div>
+          </div>
+
+          <div class="map-legend">
+            <span><i class="fas fa-circle text-success"></i> Resolved</span>
+            <span><i class="fas fa-circle text-warning"></i> Pending</span>
+            <span><i class="fas fa-circle text-danger"></i> Fined</span>
+            <span><i class="fas fa-circle text-info"></i> Suspended</span>
+          </div>
         </div>
 
-        <!-- 📋 TABLE -->
-        <div class="table-responsive">
+        <!-- TABLE -->
+        <div class="table-card">
+          <div class="table-header">
+            <h5><i class="fas fa-list"></i> Violation Reports</h5>
+          </div>
 
-          <table class="table table-success table-striped">
+          <div class="table-responsive">
+            <table class="violation-table">
 
-            <thead>
-              <tr>
-                <th>Violation</th>
-                <th>Location</th>
-                <th>Picture</th>
-                <th>Reporting #</th>
-                <th>Assigned Officer</th>
-                <th>Status</th>
-              </tr>
-            </thead>
+              <thead>
+                <tr>
+                  <th>Violation Type</th>
+                  <th>Location</th>
+                  <th>Image</th>
+                  <th>Reporting #</th>
+                  <th>Officer</th>
+                  <th>Status</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
 
-            <tbody>
-              <tr *ngFor="let v of filteredViolations">
-                <td>{{ v.type }}</td>
-                <td>{{ v.location }}</td>
+              <tbody>
 
-                <td>
-                  <img [src]="v.image" class="img-thumbnail" width="60">
-                </td>
+                <tr *ngFor="let v of filteredViolations"
+                    class="violation-row"
+                    (click)="selectViolation(v)">
 
-                <td>{{ v.whatsapp }}</td>
-                <td>{{ v.officer }}</td>
+                  <td><strong>{{ v.type }}</strong></td>
+                  <td>{{ v.location }}</td>
 
-                <td>
-                  <span [ngClass]="{
-                      'badge bg-warning text-dark': v.status === 'Pending',
-                      'badge bg-success': v.status === 'Resolved',
-                      'badge bg-danger': v.status === 'Fined',
-                      'badge bg-info': v.status === 'Suspended'
-                    }">
+                  <td>
+                    <img [src]="v.image"
+                         class="violation-img"
+                         width="50"
+                         height="50"
+                         onerror="this.src='assets/img/default.jpg'">
+                  </td>
+
+                  <td>{{ v.whatsapp }}</td>
+                  <td>{{ v.officer }}</td>
+
+                  <td>
+                    <span class="status-badge" [ngClass]="v.status.toLowerCase()">
                       {{ v.status }}
                     </span>
-                </td>
-              </tr>
-            </tbody>
+                  </td>
 
-          </table>
+                  <td>
+                    <button class="btn-notes"
+                            (click)="$event.stopPropagation(); selectViolation(v)">
+                      <i class="fas fa-sticky-note"></i> View
+                    </button>
+                  </td>
 
+                </tr>
+
+                <tr *ngIf="filteredViolations.length === 0">
+                  <td colspan="7" class="empty-state">
+                    <i class="fas fa-search"></i>
+                    <p>No violations found matching your criteria</p>
+                    <button class="btn-clear" (click)="clearFilters()">Clear Filters</button>
+                  </td>
+                </tr>
+
+              </tbody>
+
+            </table>
+          </div>
         </div>
 
       </div>
 
       <!-- RIGHT SIDE -->
-      <div class="col-md-4">
+      <div class="col-md-5">
 
-        <!-- PIE -->
-        <div class="chart-box mb-4">
-          <canvas #pieChart></canvas>
-        </div>
+        <!-- CHARTS -->
+        <div class="charts-container">
 
-        <!-- BAR -->
-        <div class="chart-box">
-          <canvas #barChart></canvas>
+          <!-- 📝 NOTES WIDGET (TOP RIGHT) -->
+<div class="notes-widget text-center mb-3 p-3"
+     *ngIf="selectedViolation; else noTopSelection">
+
+  <h5 class="mb-2">
+    <i class="fas fa-clipboard-list"></i>
+    Site Report
+  </h5>
+
+  <p><strong>{{ selectedViolation.type }}</strong></p>
+  <p>{{ selectedViolation.location }}</p>
+  <p><i class="fas fa-user"></i> {{ selectedViolation.officer }}</p>
+
+  <span class="badge mb-2"
+        [ngClass]="selectedViolation.status.toLowerCase()">
+    {{ selectedViolation.status }}
+  </span>
+
+  <div *ngIf="selectedViolation?.notes?.length">
+    <small class="d-block fw-bold">Latest Note:</small>
+    <small class="text-muted">
+      {{ selectedViolation.notes[selectedViolation.notes.length - 1]?.note }}
+    </small>
+  </div>
+
+  <button class="btn btn-success btn-sm mt-2"
+          (click)="downloadPDF()">
+    <i class="fas fa-file-pdf"></i> Download PDF
+  </button>
+
+</div>
+
+<ng-template #noTopSelection>
+  <div class="notes-widget text-center mb-3 p-3 empty">
+    <i class="fas fa-map-marked-alt"></i>
+    <p class="mb-0">Select a violation to view report</p>
+  </div>
+</ng-template>
+
+          <div class="chart-card">
+            <h6><i class="fas fa-chart-pie"></i> Violations by Status</h6>
+            <div class="chart-box">
+              <canvas #pieChart></canvas>
+            </div>
+          </div>
+
+          <div class="chart-card">
+            <h6><i class="fas fa-chart-bar"></i> Violations by Type</h6>
+            <div class="chart-box">
+              <canvas #barChart></canvas>
+            </div>
+          </div>
+
         </div>
 
       </div>
 
     </div>
+    <!-- 📄 PDF TEMPLATE -->
+<div id="pdfReport" class="pdf-report">
 
+  <h2>Environmental Violation Report</h2>
+
+  <p><strong>Type:</strong> {{ selectedViolation?.type }}</p>
+  <p><strong>Location:</strong> {{ selectedViolation?.location }}</p>
+  <p><strong>Officer:</strong> {{ selectedViolation?.officer }}</p>
+  <p><strong>Status:</strong> {{ selectedViolation?.status }}</p>
+
+  <hr>
+
+  <h4>Field Notes</h4>
+
+  <div *ngFor="let n of selectedViolation?.notes">
+    <p><strong>{{ n.date }} - {{ n.author }}</strong></p>
+    <p>{{ n.note }}</p>
+    <hr>
   </div>
 
+  <h4>Map Snapshot</h4>
+  <img id="mapSnapshot" />
+
+</div>
+
+  </div>
 </section>
