@@ -14,6 +14,7 @@ import { ComplianceComponent } from './pages/compliance/compliance';
 import { ViolationsComponent } from './pages/violations/violations';
 import { FacilitiesComponent } from './pages/facilities/facilities';
 import { MobileComponent } from './pages/mobile/mobile';
+import { DirectoryComponent } from './pages/directory/directory';
 
 export const routes: Routes = [
 
@@ -26,6 +27,7 @@ export const routes: Routes = [
   { path: 'permits', component: PermitsComponent },
   { path: 'permit-status', component: PermitStatusComponent },
   { path: 'reports', component: ReportsComponent },
+  { path: 'directory', component: DirectoryComponent },
   { path: 'inspectors', component: InspectorsComponent },
   { path: 'compliance', component: ComplianceComponent },
   { path: 'violations', component: ViolationsComponent },

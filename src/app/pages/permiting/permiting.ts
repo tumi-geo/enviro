@@ -30,7 +30,7 @@ export class PermitingComponent {
     icon: 'fa-solid fa-magnifying-glass-chart',
     title: 'Directory of Active Permits',
     description: 'See perimits issued and their details, including conditions and expiration dates.',
-    route: '/inspectors',
+    route: '/directory',
     delay: 300
   }
 ];
