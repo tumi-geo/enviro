@@ -1,0 +1,532 @@
+/* chemicals.css */
+
+/* Container */
+:host {
+  display: block;
+  width: 100%;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+/* Progress Bar */
+.progress {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  overflow: hidden;
+  backdrop-filter: blur(5px);
+  margin-bottom: 30px;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, #9c27b0, #e91e63);
+  transition: width 0.3s ease;
+  box-shadow: 0 0 10px rgba(156, 39, 176, 0.5);
+}
+
+/* Section Titles */
+.section-title {
+  color: #ce93d8;
+  margin-bottom: 20px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid rgba(156, 39, 176, 0.3);
+}
+
+h5 {
+  color: #ffffff;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+h6 {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* Form Controls */
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 0.9rem;
+}
+
+.form-control {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 10px 15px;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  background: #ffffff;
+  border-color: #9c27b0;
+  box-shadow: 0 0 0 3px rgba(156, 39, 176, 0.25);
+  outline: none;
+}
+
+.form-control-sm {
+  padding: 5px 10px;
+  font-size: 0.875rem;
+}
+
+.form-control[readonly] {
+  background: rgba(255, 255, 255, 0.8);
+  cursor: default;
+}
+
+textarea.form-control {
+  resize: vertical;
+}
+
+select.form-control {
+  cursor: pointer;
+}
+
+/* Date Input Styling */
+input[type="date"] {
+  color-scheme: dark;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+}
+
+/* Map Container */
+.map-box {
+  height: 280px;
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid rgba(156, 39, 176, 0.3);
+  margin-bottom: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.map-box::before {
+  content: "Loading map...";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  z-index: 1;
+}
+
+/* Location Status */
+.location-status {
+  border-left: 3px solid #4CAF50;
+}
+
+/* Info Sections */
+.info-section {
+  border-left: 3px solid #9c27b0;
+}
+
+/* Tables */
+.table-responsive {
+  overflow-x: auto;
+  margin-bottom: 15px;
+}
+
+.table {
+  margin-bottom: 0;
+  color: #ffffff;
+}
+
+.table-dark {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.table th {
+  background: rgba(156, 39, 176, 0.2);
+  border-bottom: 2px solid #9c27b0;
+  color: #ce93d8;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 10px 8px;
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 8px;
+  vertical-align: middle;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.table input {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #333;
+}
+
+.table input:focus {
+  background: #ffffff;
+  border-color: #9c27b0;
+}
+
+/* Custom Checkbox */
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 0;
+  user-select: none;
+}
+
+.checkbox-label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  left: 0;
+  height: 22px;
+  width: 22px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.checkbox-label:hover input ~ .checkmark {
+  background: rgba(255, 255, 255, 1);
+}
+
+.checkbox-label input:checked ~ .checkmark {
+  background: #9c27b0;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox-label input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-label .checkmark:after {
+  left: 8px;
+  top: 4px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.label-text {
+  color: #ffffff;
+  font-weight: 400;
+}
+
+/* Attachment Items */
+.attachment-item {
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease;
+}
+
+.attachment-item:hover {
+  background: rgba(156, 39, 176, 0.1);
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 0.875rem;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #9c27b0, #7b1fa2);
+  border: none;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #7b1fa2, #6a1b9a);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(156, 39, 176, 0.3);
+}
+
+.btn-secondary {
+  background: rgba(108, 117, 125, 0.9);
+  border: none;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #5a6268;
+  transform: translateY(-2px);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #28a745, #20c997);
+  border: none;
+  color: white;
+  padding: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.btn-success:hover {
+  background: linear-gradient(135deg, #20c997, #1aa179);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+}
+
+.btn-danger {
+  background: #dc3545;
+  border: none;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #c82333;
+}
+
+.btn-outline-success {
+  background: transparent;
+  border: 1px dashed rgba(156, 39, 176, 0.5);
+  color: #ce93d8;
+}
+
+.btn-outline-success:hover {
+  background: rgba(156, 39, 176, 0.1);
+  border-color: #9c27b0;
+  color: #ce93d8;
+}
+
+/* File Upload */
+.upload-section {
+  margin-bottom: 20px;
+}
+
+.file-list {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.file-item {
+  padding: 5px 0;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.file-item:last-child {
+  border-bottom: none;
+}
+
+/* Summary Box */
+.summary-box {
+  border-left: 3px solid #9c27b0;
+}
+
+.summary-box p {
+  color: #ffffff;
+}
+
+/* Row Layout */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -10px;
+  margin-left: -10px;
+}
+
+.col-md-6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.col-6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+}
+
+.col-12 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+/* Helper Text */
+small.text-white-50 {
+  color: rgba(255, 255, 255, 0.7) !important;
+  font-size: 0.85rem;
+}
+
+.text-success {
+  color: #4CAF50 !important;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+div[ng-reflect-ng-switch] {
+  animation: fadeIn 0.3s ease;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(156, 39, 176, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(156, 39, 176, 0.7);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .map-box {
+    height: 250px;
+  }
+
+  .table th,
+  .table td {
+    font-size: 0.8rem;
+    padding: 5px;
+  }
+
+  .btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Loading State */
+.btn.loading {
+  position: relative;
+  color: transparent;
+}
+
+.btn.loading::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 50%;
+  left: 50%;
+  margin-left: -10px;
+  margin-top: -10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* Recipient Card */
+.recipient-card {
+  transition: all 0.3s ease;
+}
+
+.recipient-card:hover {
+  border-color: #9c27b0 !important;
+  box-shadow: 0 0 15px rgba(156, 39, 176, 0.2);
+}
+
+/* Recipient Map Box */
+.recipient-map-box {
+  height: 200px;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(156, 39, 176, 0.3);
+  background: rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.recipient-map-box::before {
+  content: "Click to select location";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 12px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.map-container {
+  margin: 10px 0;
+}
+
+/* Location Status */
+.location-status {
+  border-left: 3px solid #4CAF50;
+}
+
+.text-warning {
+  color: #ffc107 !important;
+}
+
+/* Fix for map initialization */
+.recipient-map-box.esri-view {
+  background: transparent;
+}
+
+.recipient-map-box.esri-view::before {
+  display: none;
+}

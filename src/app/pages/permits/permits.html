@@ -3,121 +3,45 @@
 
     <h2 class="mb-4 text-center">Permit Application</h2>
 
-    <form (ngSubmit)="submitForm()" #permitForm="ngForm">
+    <!-- ✅ APPLICATION TYPE -->
+    <label class="text-white">Application Type *</label>
+    <select class="form-control mb-3"
+      [(ngModel)]="selectedApplicationType"
+      name="applicationType"
+      required>
 
-      <!-- Applicant Info (matching service fields) -->
-      <input class="form-control mb-3"
-        [(ngModel)]="formData.applicant"
-        name="applicant"
-        placeholder="Applicant Name"
-        required />
+      <option value="">Select type</option>
+      <option value="EIA">EIA</option>
+      <option value="Waste">Waste Management</option>
+      <option value="Chemicals">Controlled Substances</option>
+      <option value="Tourism">Tourism</option>
+      <option value="VeldProducts">Veld Products</option>
+    </select>
 
-      <input class="form-control mb-3"
-        [(ngModel)]="formData.contact"
-        name="contact"
-        placeholder="Phone Number"
-        required />
+    <!-- ✅ DYNAMIC CHILD FORMS -->
+    <app-eia
+      *ngIf="selectedApplicationType === 'EIA'"
+      (formChange)="onChildFormChange($event)">
+    </app-eia>
 
-      <input class="form-control mb-3"
-        [(ngModel)]="formData.email"
-        name="email"
-        type="email"
-        placeholder="Email Address"
-        required />
+    <app-chemicals
+      *ngIf="selectedApplicationType === 'Chemicals'"
+      (formChange)="onChildFormChange($event)">
+    </app-chemicals>
 
-      <input class="form-control mb-3"
-        [(ngModel)]="formData.projectName"
-        name="projectName"
-        placeholder="Project Name"
-        required />
+    <app-tourism
+      *ngIf="selectedApplicationType === 'Tourism'"
+      (formChange)="onChildFormChange($event)">
+    </app-tourism>
 
-      <!-- Activity Type (maps to category in service) -->
-      <select class="form-control mb-3"
-        [(ngModel)]="formData.category"
-        name="category"
-        required>
-        <option value="">Select Activity Type</option>
-        <option value="Construction">Construction</option>
-        <option value="Mining">Mining</option>
-        <option value="Manufacturing">Manufacturing</option>
-        <option value="Food Processing">Food Processing</option>
-        <option value="Water Treatment">Water Treatment</option>
-        <option value="Waste Management">Waste Management</option>
-      </select>
+    <app-veld-products
+      *ngIf="selectedApplicationType === 'VeldProducts'"
+      (formChange)="onChildFormChange($event)">
+    </app-veld-products>
 
-      <!-- MAP -->
-      <label class="text-white mb-2">Select Location *</label>
-      <div #mapViewNode class="map-box mb-3"></div>
-      <small class="text-white-50 d-block mb-2">Click "Draw Point" or "Draw Polygon" to mark location</small>
+    <app-waste-management
+      *ngIf="selectedApplicationType === 'Waste'"
+      (formChange)="onChildFormChange($event)">
+    </app-waste-management>
 
-      <input class="form-control mb-3"
-        [(ngModel)]="formData.location"
-        name="location"
-        placeholder="Selected Location"
-        readonly />
-
-      <!-- Description -->
-      <textarea class="form-control mb-3"
-        [(ngModel)]="formData.description"
-        name="description"
-        placeholder="Project Description (optional)"
-        rows="3">
-      </textarea>
-
-      <!-- File Upload -->
-      <label class="text-white mb-2">Supporting Documents (Optional)</label>
-      <input type="file"
-        multiple
-        class="form-control mb-3"
-        (change)="onFileSelected($event)"
-        accept=".pdf,.doc,.docx,.jpg,.png" />
-
-      <!-- Submit Button -->
-      <button class="btn btn-success w-100" type="submit" [disabled]="isSubmitting">
-        <span *ngIf="isSubmitting">Submitting...</span>
-        <span *ngIf="!isSubmitting">Submit Application</span>
-      </button>
-
-    </form>
-
-    <!-- GEOMETRY CONTROLS -->
-    <div class="mt-3 d-grid gap-2">
-      <button class="btn btn-outline-primary"
-        type="button"
-        (click)="setGeometryType('point')"
-        [disabled]="!isMapInitialized">
-        📍 Draw Point
-      </button>
-
-      <button class="btn btn-outline-secondary"
-        type="button"
-        (click)="setGeometryType('polygon')"
-        [disabled]="!isMapInitialized">
-        🟦 Draw Polygon
-      </button>
-
-      <button class="btn btn-outline-light mt-2"
-        type="button"
-        (click)="generatePreviewPDF()">
-        Preview PDF
-      </button>
-    </div>
-
-    <!-- PDF PREVIEW (Hidden - used for PDF generation) -->
-    <div id="pdfPreview" class="bg-white p-3 mt-4 rounded" style="display: none;">
-      <div id="previewContent">
-        <h5 class="mb-3 text-center">Permit Application Preview</h5>
-        <p><strong>Applicant:</strong> {{ formData.applicant }}</p>
-        <p><strong>Contact:</strong> {{ formData.contact }}</p>
-        <p><strong>Email:</strong> {{ formData.email }}</p>
-        <p><strong>Project Name:</strong> {{ formData.projectName }}</p>
-        <p><strong>Activity Type:</strong> {{ formData.category }}</p>
-        <p><strong>Location:</strong> {{ formData.location }}</p>
-        <p><strong>Status:</strong> Pending Review</p>
-        <hr>
-        <p class="text-muted small">Generated on: {{ getCurrentDate() }}</p>
-      </div>
-    </div>
-
-  </div>
 </div>

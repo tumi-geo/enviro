@@ -1,0 +1,395 @@
+<div class="text-white">
+
+  <!-- ========================================== -->
+  <!-- STEP HEADER & PROGRESS -->
+  <!-- ========================================== -->
+  <div class="text-center mb-3">
+    <span class="section-badge mb-2">🌿 Veld Products Harvest</span>
+    <h5>Application - Step {{ currentStep }} of 3</h5>
+  </div>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress mb-4">
+    <div class="progress-bar" [style.width.%]="(currentStep / 3) * 100"></div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- STEP 1: APPLICANT DETAILS -->
+  <!-- ========================================== -->
+  <div *ngIf="currentStep === 1" class="fade-in">
+
+    <div class="d-flex align-items-center gap-2 mb-3">
+      <span class="section-badge">Step 1</span>
+      <h5 class="section-title m-0">Applicant Details</h5>
+    </div>
+
+    <div class="info-section p-4 rounded" style="background: rgba(0,0,0,0.2);">
+
+      <!-- Personal Information -->
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="required">Full Name</label>
+          <input class="form-control"
+            [(ngModel)]="applicant.name"
+            (ngModelChange)="emit()"
+            placeholder="Enter your full name" />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="required">ID / Passport Number</label>
+          <input class="form-control"
+            [(ngModel)]="applicant.id"
+            (ngModelChange)="emit()"
+            placeholder="Omang or Passport" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="required">Phone Number</label>
+          <input class="form-control"
+            [(ngModel)]="applicant.phone"
+            (ngModelChange)="emit()"
+            placeholder="+267 XXXXXXX" />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="required">Email Address</label>
+          <input class="form-control"
+            [(ngModel)]="applicant.email"
+            (ngModelChange)="emit()"
+            type="email"
+            placeholder="email@example.com" />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="required">Postal Address</label>
+        <textarea class="form-control"
+          [(ngModel)]="applicant.postalAddress"
+          (ngModelChange)="emit()"
+          placeholder="P.O. Box / Postal Address"
+          rows="2"></textarea>
+      </div>
+
+      <!-- Nationality -->
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="required">Nationality</label>
+          <select class="form-control"
+            [(ngModel)]="applicant.nationality"
+            (ngModelChange)="emit()">
+            <option value="">Select Nationality</option>
+            <option>Citizen</option>
+            <option>Resident</option>
+            <option>Non-resident</option>
+          </select>
+        </div>
+      </div>
+
+      <hr class="my-4" style="border-color: rgba(255,255,255,0.2);">
+
+      <!-- Purpose of License -->
+      <label class="required mb-3">Purpose of License</label>
+
+      <div class="purpose-group mb-4">
+        <div class="purpose-item">
+          <label class="purpose-checkbox" [class.selected]="purposes.includes('Harvest')">
+            <input type="checkbox" (change)="togglePurpose('Harvest')" />
+            <span class="purpose-icon">🌱</span>
+            <span class="purpose-label">Harvest</span>
+            <small class="d-block text-white-50 mt-1">Collecting veld products</small>
+          </label>
+        </div>
+        <div class="purpose-item">
+          <label class="purpose-checkbox" [class.selected]="purposes.includes('Deal')">
+            <input type="checkbox" (change)="togglePurpose('Deal')" />
+            <span class="purpose-icon">🤝</span>
+            <span class="purpose-label">Deal</span>
+            <small class="d-block text-white-50 mt-1">Buying & selling</small>
+          </label>
+        </div>
+        <div class="purpose-item">
+          <label class="purpose-checkbox" [class.selected]="purposes.includes('Export')">
+            <input type="checkbox" (change)="togglePurpose('Export')" />
+            <span class="purpose-icon">🚚</span>
+            <span class="purpose-label">Export</span>
+            <small class="d-block text-white-50 mt-1">International export</small>
+          </label>
+        </div>
+      </div>
+
+      <!-- Selected Purposes Display -->
+      <div *ngIf="purposes.length > 0" class="mb-3">
+        <small class="text-white-50">Selected: </small>
+        <span class="section-badge me-1" *ngFor="let p of purposes">{{ p }}</span>
+      </div>
+
+      <!-- Duration -->
+      <label class="required mb-2">License Duration</label>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label>Start Date</label>
+          <input type="date" class="form-control"
+            [(ngModel)]="duration.start"
+            (ngModelChange)="emit()" />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>End Date</label>
+          <input type="date" class="form-control"
+            [(ngModel)]="duration.end"
+            (ngModelChange)="emit()" />
+        </div>
+      </div>
+
+      <!-- Duration Summary -->
+      <div *ngIf="duration.start && duration.end" class="duration-display">
+        <span class="date">{{ duration.start | date:'mediumDate' }}</span>
+        <span class="mx-2">→</span>
+        <span class="date">{{ duration.end | date:'mediumDate' }}</span>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ========================================== -->
+  <!-- STEP 2: VELD PRODUCTS & LOCATION -->
+  <!-- ========================================== -->
+  <div *ngIf="currentStep === 2" class="fade-in">
+
+    <div class="d-flex align-items-center gap-2 mb-3">
+      <span class="section-badge">Step 2</span>
+      <h5 class="section-title m-0">Products & Location</h5>
+    </div>
+
+    <!-- Veld Products Table -->
+    <div class="card">
+      <div class="card-header">
+        <h6 class="m-0">
+          🌿 Veld Products
+          <span class="product-badge">{{ products.length }}</span>
+        </h6>
+        <button class="btn btn-outline-success btn-sm" (click)="addProduct()">
+          ➕ Add Product
+        </button>
+      </div>
+
+      <div *ngIf="products.length === 0" class="empty-state">
+        <div class="empty-state-icon">🌾</div>
+        <p>No products added yet</p>
+        <button class="btn btn-outline-success btn-sm" (click)="addProduct()">
+          Add Your First Product
+        </button>
+      </div>
+
+      <div *ngIf="products.length > 0" class="table-responsive">
+        <table class="table table-dark products-table">
+          <thead>
+            <tr>
+              <th>Scientific Name</th>
+              <th>Common Name</th>
+              <th>Quantity (kg)</th>
+              <th style="width: 60px;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of products; let i = index">
+              <td>
+                <input class="form-control form-control-sm"
+                  [(ngModel)]="p.scientific"
+                  (ngModelChange)="emit()"
+                  placeholder="e.g., Sclerocarya birrea" />
+              </td>
+              <td>
+                <input class="form-control form-control-sm"
+                  [(ngModel)]="p.common"
+                  (ngModelChange)="emit()"
+                  placeholder="e.g., Morula" />
+              </td>
+              <td>
+                <input class="form-control form-control-sm"
+                  type="number"
+                  [(ngModel)]="p.quantity"
+                  (ngModelChange)="emit()"
+                  placeholder="0"
+                  min="0" />
+              </td>
+              <td>
+                <button class="btn btn-danger btn-sm"
+                  (click)="removeProduct(i)"
+                  *ngIf="products.length > 1">
+                  ✕
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Harvest Location -->
+    <div class="card">
+      <h6 class="mb-3">📍 Harvest Location</h6>
+
+      <label class="required">Select Harvest Area on Map</label>
+      <div #mapEl class="map-box"></div>
+
+      <div class="row">
+        <div class="col-md-8 mb-3">
+          <label>Selected Location</label>
+          <input class="form-control"
+            [(ngModel)]="location.address"
+            (ngModelChange)="emit()"
+            readonly
+            placeholder="Click on map to select location" />
+        </div>
+        <div class="col-md-4 mb-3">
+          <label>District</label>
+          <input class="form-control"
+            [(ngModel)]="location.district"
+            (ngModelChange)="emit()"
+            placeholder="e.g., Kweneng" />
+        </div>
+      </div>
+
+      <div *ngIf="location.lat && location.lng" class="location-status">
+        <small class="text-success">
+          ✓ Coordinates: {{ location.lat.toFixed(6) }}, {{ location.lng.toFixed(6) }}
+        </small>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========================================== -->
+  <!-- STEP 3: REVIEW & SUBMIT -->
+  <!-- ========================================== -->
+  <div *ngIf="currentStep === 3" class="fade-in">
+
+    <div class="d-flex align-items-center gap-2 mb-3">
+      <span class="section-badge">Step 3</span>
+      <h5 class="section-title m-0">Review & Submit</h5>
+    </div>
+
+    <!-- Application Summary -->
+    <div class="card">
+      <h6 class="mb-3">📋 Application Summary</h6>
+
+      <div class="summary-box">
+        <div class="summary-row">
+          <span class="summary-label">Applicant</span>
+          <span class="summary-value">{{ applicant.name || 'Not provided' }}</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">ID/Passport</span>
+          <span class="summary-value">{{ applicant.id || 'Not provided' }}</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Contact</span>
+          <span class="summary-value">{{ applicant.phone }} | {{ applicant.email }}</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Nationality</span>
+          <span class="summary-value">{{ applicant.nationality || 'Not selected' }}</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Purpose(s)</span>
+          <span class="summary-value">
+            <span *ngIf="purposes.length === 0" class="text-warning">No purpose selected</span>
+            <span *ngFor="let p of purposes; let last = last">
+              {{ p }}{{ !last ? ', ' : '' }}
+            </span>
+          </span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Duration</span>
+          <span class="summary-value">
+            {{ duration.start || 'Not set' }} — {{ duration.end || 'Not set' }}
+          </span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Products</span>
+          <span class="summary-value">{{ products.length }} product(s) listed</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Harvest Location</span>
+          <span class="summary-value">
+            {{ location.district || 'District not specified' }}
+            <span *ngIf="location.lat" class="text-success d-block small">✓ Coordinates captured</span>
+            <span *ngIf="!location.lat" class="text-warning d-block small">⚠ Location not selected</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Products Preview -->
+      <div *ngIf="products.length > 0" class="mt-3">
+        <small class="text-white-50">Products List:</small>
+        <div class="table-responsive mt-2">
+          <table class="table table-dark table-sm">
+            <thead>
+              <tr>
+                <th>Scientific Name</th>
+                <th>Common Name</th>
+                <th>Qty (kg)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of products">
+                <td>{{ p.scientific || '-' }}</td>
+                <td>{{ p.common || '-' }}</td>
+                <td>{{ p.quantity || '0' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- File Upload -->
+    <div class="card">
+      <h6 class="mb-3">📎 Supporting Documents</h6>
+
+      <input type="file"
+        multiple
+        class="form-control mb-3"
+        (change)="onFile($event)"
+        accept=".pdf,.doc,.docx,.jpg,.png" />
+
+      <div *ngIf="files.length > 0" class="file-list">
+        <div *ngFor="let file of files; let i = index" class="file-item">
+          <span>📄 {{ file.name }}</span>
+          <span class="file-size">{{ (file.size / 1024).toFixed(1) }} KB</span>
+        </div>
+      </div>
+
+      <small class="text-white-50">
+        Upload: ID Copy, Land Rights Document, Environmental Compliance (if applicable)
+      </small>
+    </div>
+
+    <!-- Submit Button -->
+    <button class="btn btn-success w-100" (click)="submit()">
+      🌿 Submit Veld Products Application
+    </button>
+
+  </div>
+
+  <!-- ========================================== -->
+  <!-- NAVIGATION BUTTONS -->
+  <!-- ========================================== -->
+  <div class="d-flex justify-content-between mt-4">
+    <button class="btn btn-secondary"
+      type="button"
+      (click)="back()"
+      *ngIf="currentStep > 1">
+      ← Back
+    </button>
+
+    <button class="btn btn-primary"
+      type="button"
+      (click)="next()"
+      *ngIf="currentStep < 3">
+      Next →
+    </button>
+  </div>
+
+</div>

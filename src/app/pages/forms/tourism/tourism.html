@@ -1,0 +1,499 @@
+<!-- tourism.html -->
+<div class="text-white">
+
+  <!-- ========================================== -->
+  <!-- STEP HEADER & PROGRESS -->
+  <!-- ========================================== -->
+  <div class="text-center mb-3">
+    <span class="section-badge mb-2">Tourism Enterprise License</span>
+    <h5>Application - Step {{ currentStep }} of 4</h5>
+  </div>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress mb-4">
+    <div class="progress-bar" [style.width.%]="(currentStep / 4) * 100"></div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- STEP 1: COMPANY DETAILS -->
+  <!-- ========================================== -->
+  <div *ngIf="currentStep === 1" class="fade-in">
+
+    <div class="d-flex align-items-center gap-2 mb-3">
+      <span class="section-badge">Step 1</span>
+      <h5 class="section-title m-0">Company Details</h5>
+    </div>
+
+    <div class="info-section p-4 rounded" style="background: rgba(0,0,0,0.2);">
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="required">Company Name</label>
+          <input class="form-control"
+            [(ngModel)]="company.name"
+            (ngModelChange)="emit()"
+            placeholder="Registered Company Name" />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>Trading Name</label>
+          <input class="form-control"
+            [(ngModel)]="company.tradingName"
+            (ngModelChange)="emit()"
+            placeholder="Trading As / DBA" />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="required">Postal Address</label>
+        <textarea class="form-control"
+          [(ngModel)]="company.postalAddress"
+          (ngModelChange)="emit()"
+          placeholder="P.O. Box / Postal Address"
+          rows="2"></textarea>
+      </div>
+
+      <div class="mb-3">
+        <label class="required">Physical Location</label>
+        <div #mapEl class="map-box"></div>
+
+        <input class="form-control"
+          [(ngModel)]="company.physicalAddress"
+          (ngModelChange)="emit()"
+          readonly
+          placeholder="Click on map to select location" />
+
+        <div *ngIf="company.lat && company.lng" class="location-status mt-2">
+          <small class="text-success">✓ Location coordinates captured</small>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <label class="required">Phone Number</label>
+          <input class="form-control"
+            [(ngModel)]="company.phone"
+            (ngModelChange)="emit()"
+            placeholder="+267 XXXXXXX" />
+        </div>
+        <div class="col-md-4 mb-3">
+          <label>Fax Number</label>
+          <input class="form-control"
+            [(ngModel)]="company.fax"
+            (ngModelChange)="emit()"
+            placeholder="Fax (Optional)" />
+        </div>
+        <div class="col-md-4 mb-3">
+          <label class="required">Email Address</label>
+          <input class="form-control"
+            [(ngModel)]="company.email"
+            (ngModelChange)="emit()"
+            type="email"
+            placeholder="company@example.com" />
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ========================================== -->
+  <!-- STEP 2: REGISTRATION & DIRECTORS -->
+  <!-- ========================================== -->
+  <div *ngIf="currentStep === 2" class="fade-in">
+
+    <div class="d-flex align-items-center gap-2 mb-3">
+      <span class="section-badge">Step 2</span>
+      <h5 class="section-title m-0">Registration & Management</h5>
+    </div>
+
+    <!-- Company Secretaries -->
+    <div class="card">
+      <div class="card-header">
+        <h6 class="m-0">Company Secretaries</h6>
+        <button class="btn btn-outline-success btn-sm" (click)="addSecretary()">
+          ➕ Add Secretary
+        </button>
+      </div>
+
+      <div *ngFor="let s of secretaries; let i = index" class="row mb-2">
+        <div class="col-md-5 mb-2">
+          <input class="form-control form-control-sm"
+            [(ngModel)]="s.name"
+            placeholder="Full Name" />
+        </div>
+        <div class="col-md-5 mb-2">
+          <input class="form-control form-control-sm"
+            [(ngModel)]="s.contact"
+            placeholder="Contact Number" />
+        </div>
+        <div class="col-md-2 mb-2">
+          <button class="btn btn-danger btn-sm w-100"
+            (click)="remove(secretaries, i)"
+            *ngIf="secretaries.length > 1">
+            ✕
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Registration Details -->
+    <div class="card">
+      <h6>Registration Information</h6>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="required">Certificate Number</label>
+          <input class="form-control"
+            [(ngModel)]="registration.certificateNo"
+            placeholder="Registration/Certificate No." />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="required">Date of Registration</label>
+          <input type="date" class="form-control"
+            [(ngModel)]="registration.date" />
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="required">Principal Business Activity</label>
+        <textarea class="form-control"
+          [(ngModel)]="registration.principalBusiness"
+          placeholder="Describe main business activities..."
+          rows="2"></textarea>
+      </div>
+
+      <!-- Criminal Record -->
+      <div class="mb-3">
+        <label class="checkbox-label">
+          <input type="checkbox" [(ngModel)]="registration.criminalRecord" />
+          <span class="checkmark"></span>
+          <span class="label-text">Does the company or any director have a criminal record?</span>
+        </label>
+
+        <div *ngIf="registration.criminalRecord" class="conditional-field">
+          <label class="required">Please provide details</label>
+          <textarea class="form-control"
+            [(ngModel)]="registration.criminalDetails"
+            placeholder="Explain the circumstances..."
+            rows="2"></textarea>
+        </div>
+      </div>
+
+      <!-- Registered Elsewhere -->
+      <div class="mb-3">
+        <label class="checkbox-label">
+          <input type="checkbox" [(ngModel)]="registration.registeredElsewhere" />
+          <span class="checkmark"></span>
+          <span class="label-text">Is the company registered elsewhere?</span>
+        </label>
+
+        <div *ngIf="registration.registeredElsewhere" class="conditional-field">
+          <label class="required">Registration Details</label>
+          <textarea class="form-control"
+            [(ngModel)]="registration.registrationDetails"
+            placeholder="Provide registration details..."
+            rows="2"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shareholders -->
+    <div class="card">
+      <div class="card-header">
+        <h6 class="m-0">Shareholders</h6>
+        <button class="btn btn-outline-success btn-sm" (click)="addShareholder()">
+          ➕ Add Shareholder
+        </button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-dark">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Nationality</th>
+              <th>Shares (%)</th>
+              <th style="width: 50px;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let s of shareholders; let i = index">
+              <td><input [(ngModel)]="s.name" placeholder="Full Name" /></td>
+              <td><input [(ngModel)]="s.nationality" placeholder="Nationality" /></td>
+              <td><input type="number" [(ngModel)]="s.shares" placeholder="%" min="0" max="100" /></td>
+              <td>
+                <button class="btn btn-danger btn-sm" (click)="remove(shareholders, i)"
+                  *ngIf="shareholders.length > 1">✕</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Directors -->
+    <div class="card">
+      <div class="card-header">
+        <h6 class="m-0">Directors</h6>
+        <button class="btn btn-outline-success btn-sm" (click)="addDirector()">
+          ➕ Add Director
+        </button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-dark">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Residential Address</th>
+              <th>Nationality</th>
+              <th style="width: 50px;"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let d of directors; let i = index">
+              <td><input [(ngModel)]="d.name" placeholder="Full Name" /></td>
+              <td><input [(ngModel)]="d.address" placeholder="Address" /></td>
+              <td><input [(ngModel)]="d.nationality" placeholder="Nationality" /></td>
+              <td>
+                <button class="btn btn-danger btn-sm" (click)="remove(directors, i)"
+                  *ngIf="directors.length > 1">✕</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========================================== -->
+  <!-- STEP 3: EMPLOYMENT & LABOUR -->
+  <!-- ========================================== -->
+  <div *ngIf="currentStep === 3" class="fade-in">
+
+    <div class="d-flex align-items-center gap-2 mb-3">
+      <span class="section-badge">Step 3</span>
+      <h5 class="section-title m-0">Employment & Training</h5>
+    </div>
+
+    <!-- Training Plan -->
+    <div class="card">
+      <label class="checkbox-label">
+        <input type="checkbox" [(ngModel)]="labour.trainingSubmitted" />
+        <span class="checkmark"></span>
+        <span class="label-text">Training Plan submitted to Department of Labour?</span>
+      </label>
+
+      <div *ngIf="!labour.trainingSubmitted" class="conditional-field">
+        <label class="required">Reason for not submitting</label>
+        <textarea class="form-control"
+          [(ngModel)]="labour.reason"
+          placeholder="Please explain why..."
+          rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- Current Employment -->
+    <div class="card">
+      <h6>Current Employment Numbers</h6>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label>Citizen Males</label>
+          <input type="number" class="form-control"
+            [(ngModel)]="employment.citizenMales"
+            min="0" placeholder="0" />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>Citizen Females</label>
+          <input type="number" class="form-control"
+            [(ngModel)]="employment.citizenFemales"
+            min="0" placeholder="0" />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>Non-Citizen Males</label>
+          <input type="number" class="form-control"
+            [(ngModel)]="employment.nonCitizenMales"
+            min="0" placeholder="0" />
+        </div>
+        <div class="col-md-6 mb-3">
+          <label>Non-Citizen Females</label>
+          <input type="number" class="form-control"
+            [(ngModel)]="employment.nonCitizenFemales"
+            min="0" placeholder="0" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Job Classifications -->
+    <div class="card">
+      <h6>Job Classifications (Current & Projected)</h6>
+      <p class="text-white-50 small mb-2">
+        C = Citizens | NC = Non-Citizens
+      </p>
+
+      <div class="table-responsive">
+        <table class="table table-dark job-table">
+          <thead>
+            <tr>
+              <th rowspan="2">Category</th>
+              <th colspan="2">Currently Employed</th>
+              <th colspan="2">Vacant Positions</th>
+              <th rowspan="2">Total</th>
+            </tr>
+            <tr>
+              <th>C</th><th>NC</th><th>C</th><th>NC</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let job of jobClassifications">
+              <td>{{ job.category }}</td>
+              <td><input type="number" [(ngModel)]="job.employedC" min="0" /></td>
+              <td><input type="number" [(ngModel)]="job.employedNC" min="0" /></td>
+              <td><input type="number" [(ngModel)]="job.vacantC" min="0" /></td>
+              <td><input type="number" [(ngModel)]="job.vacantNC" min="0" /></td>
+              <td><input [(ngModel)]="job.total" readonly /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ========================================== -->
+  <!-- STEP 4: LICENSES & SUBMIT -->
+  <!-- ========================================== -->
+  <div *ngIf="currentStep === 4" class="fade-in">
+
+    <div class="d-flex align-items-center gap-2 mb-3">
+      <span class="section-badge">Step 4</span>
+      <h5 class="section-title m-0">Licenses & Submission</h5>
+    </div>
+
+    <!-- Existing Licenses -->
+    <div class="card">
+      <label class="checkbox-label mb-3">
+        <input type="checkbox" [(ngModel)]="hasLicenses" />
+        <span class="checkmark"></span>
+        <span class="label-text">Does the company hold any existing tourism licenses?</span>
+      </label>
+
+      <div *ngIf="hasLicenses">
+        <div class="card-header">
+          <h6 class="m-0">Current Licenses</h6>
+          <button class="btn btn-outline-success btn-sm" (click)="addLicense()">
+            ➕ Add License
+          </button>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-dark">
+            <thead>
+              <tr>
+                <th>License Number</th>
+                <th>Category</th>
+                <th>Expiry Date</th>
+                <th>Issuing Authority</th>
+                <th style="width: 50px;"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let l of licenses; let i = index">
+                <td><input [(ngModel)]="l.number" placeholder="License #" /></td>
+                <td><input [(ngModel)]="l.category" placeholder="Category" /></td>
+                <td><input type="date" [(ngModel)]="l.expiry" /></td>
+                <td><input [(ngModel)]="l.name" placeholder="Authority" /></td>
+                <td>
+                  <button class="btn btn-danger btn-sm" (click)="remove(licenses, i)"
+                    *ngIf="licenses.length > 1">✕</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Application Summary -->
+    <div class="card">
+      <h6>📊 Application Summary</h6>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="stat-card">
+            <div class="stat-value">{{ company.name ? '✓' : '○' }}</div>
+            <div class="stat-label">Company Details</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="stat-card">
+            <div class="stat-value">{{ directors.length }}</div>
+            <div class="stat-label">Directors</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="stat-card">
+            <div class="stat-value">{{ shareholders.length }}</div>
+            <div class="stat-label">Shareholders</div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="stat-card">
+            <div class="stat-value">{{ hasLicenses ? licenses.length : 0 }}</div>
+            <div class="stat-label">Existing Licenses</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- File Upload -->
+    <div class="card">
+      <h6>📎 Supporting Documents</h6>
+
+      <input type="file"
+        multiple
+        class="form-control mb-3"
+        (change)="onFile($event)"
+        accept=".pdf,.doc,.docx,.jpg,.png" />
+
+      <div *ngIf="files.length > 0" class="file-list">
+        <div *ngFor="let file of files; let i = index" class="file-item">
+          <span>📄 {{ file.name }}</span>
+          <span class="file-size">{{ (file.size / 1024).toFixed(1) }} KB</span>
+        </div>
+      </div>
+
+      <small class="text-white-50">
+        Upload: Certificate of Incorporation, Share Certificates, Training Plan, etc.
+      </small>
+    </div>
+
+    <!-- Submit Button -->
+    <button class="btn btn-success w-100 mt-3" (click)="submit()">
+      🚀 Submit Tourism License Application
+    </button>
+
+  </div>
+
+  <!-- ========================================== -->
+  <!-- NAVIGATION BUTTONS -->
+  <!-- ========================================== -->
+  <div class="d-flex justify-content-between mt-4">
+    <button class="btn btn-secondary"
+      type="button"
+      (click)="back()"
+      *ngIf="currentStep > 1">
+      ← Back
+    </button>
+
+    <button class="btn btn-primary"
+      type="button"
+      (click)="next()"
+      *ngIf="currentStep < 4">
+      Next →
+    </button>
+  </div>
+
+</div>
