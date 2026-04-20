@@ -35,7 +35,7 @@ body {
 }
 
 .nav-link.active {
-  background: rgba(0, 86, 179, 0.2);
+  background: rgba(29, 72, 118, 0.2);
   font-weight: bold;
   color: #000 !important;
 }
@@ -67,7 +67,7 @@ body {
 /* Active (clicked/current route) */
 .active-btn {
   background: #0d6efd !important;
-  box-shadow: 0 6px 20px rgba(13, 110, 253, 0.5);
+  box-shadow: 0 6px 20px rgba(103, 151, 223, 0.5);
 }
 /* Container for page content */
 .app-body {
