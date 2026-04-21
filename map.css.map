@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["angular:styles/component:css;d470774ece53cb4db19af51cb436f340f5903b87eac203fd8dcb9c1a1060564e;E:/Workspace/Geobim/portal/src/app/pages/map/map.ts"],
+  "sourcesContent": [".map-container { height: 100vh; width: 100%; }"],
+  "mappings": ";AAAA,CAAC;AAAgB,UAAQ;AAAO,SAAO;AAAM;",
+  "names": []
+}
