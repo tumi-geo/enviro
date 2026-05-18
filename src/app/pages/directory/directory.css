@@ -15,6 +15,8 @@
 
 /* Header */
 .header-section {
+  text-align: center;
+  margin-top: 60px;
   margin-bottom: 30px;
 }
 
@@ -609,4 +611,31 @@
   .permit-table {
     color: black;
   }
+}
+.equal-height-row {
+  display: flex;
+  align-items: stretch; /* 🔥 THIS is key */
+}
+
+/* Make both columns stretch */
+.equal-height-row > [class*="col-"] {
+  display: flex;
+  flex-direction: column;
+}
+.map-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Make map box expand */
+.map-box {
+  flex: 1;
+  min-height: 100%;
+}
+
+/* Ensure actual ArcGIS map fills container */
+.map {
+  height: 100%;
+  width: 100%;
 }

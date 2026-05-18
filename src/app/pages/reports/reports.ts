@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import AOS from 'aos';
 import jsPDF from 'jspdf';
 
 @Component({
@@ -10,7 +11,18 @@ import jsPDF from 'jspdf';
   templateUrl: './reports.html',
   styleUrls: ['./reports.css']
 })
-export class ReportsComponent {
+export class ReportsComponent implements OnInit, AfterViewInit {
+  ngAfterViewInit(): void {
+    throw new Error('Method not implemented.');
+  }
+  ngOnInit(): void {
+    AOS.init({
+      duration: 500,
+      easing: 'ease-in-out',
+      once: true,     // animation happens only once
+      offset: 100
+    });
+  }
 
   reports = [
     {
